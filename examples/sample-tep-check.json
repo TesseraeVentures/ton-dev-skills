@@ -1,0 +1,28 @@
+{
+  "contract": "contracts/jetton-minter.fc",
+  "language": "func",
+  "timestamp": "2026-02-16T12:00:00Z",
+  "results": [
+    {
+      "tep": "74",
+      "name": "Fungible Tokens (Jettons)",
+      "compliant": true,
+      "issues": []
+    },
+    {
+      "tep": "89",
+      "name": "Discoverable Jetton Wallets",
+      "compliant": false,
+      "issues": [
+        "Missing provide_wallet_address handler — wallets cannot be discovered by owner address",
+        "Missing take_wallet_address response message"
+      ]
+    },
+    {
+      "tep": "64",
+      "name": "Token Data Standard",
+      "compliant": true,
+      "issues": []
+    }
+  ]
+}

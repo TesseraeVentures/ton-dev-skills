@@ -1,0 +1,50 @@
+{
+  "contract": "contracts/jetton-minter.fc",
+  "language": "func",
+  "timestamp": "2026-02-16T12:00:00Z",
+  "findings": [
+    {
+      "id": "AC-001",
+      "severity": "high",
+      "category": "Access Control",
+      "message": "Missing sender validation on internal_transfer handler. Any contract can invoke this message, potentially minting tokens without authorization.",
+      "line": 42,
+      "column": 3,
+      "suggestion": "Add throw_unless(73, equal_slices(sender_address, my_address())) to verify the message originates from the expected wallet contract."
+    },
+    {
+      "id": "BM-003",
+      "severity": "medium",
+      "category": "Bounced Messages",
+      "message": "No bounce handler for outgoing token transfer. If the destination contract rejects the message, tokens will be lost.",
+      "line": 87,
+      "column": 5,
+      "suggestion": "Implement a recv_bounced handler that restores the sender's balance on failed transfers."
+    },
+    {
+      "id": "GF-002",
+      "severity": "low",
+      "category": "Gas & Fees",
+      "message": "Gas forwarding amount is hardcoded. May be insufficient for complex receiver contracts or fail under network congestion.",
+      "line": 103,
+      "column": 12,
+      "suggestion": "Use msg_value - gas_consumption instead of a fixed value to forward remaining gas."
+    },
+    {
+      "id": "TEP-074-INFO",
+      "severity": "info",
+      "category": "TEP Compliance",
+      "message": "Contract does not implement optional TEP-74 get_jetton_data metadata extension. Consider adding for better wallet/explorer discoverability.",
+      "line": 12,
+      "column": 1,
+      "suggestion": "Add a get_jetton_data() get-method returning (total_supply, mintable, admin_address, content, wallet_code)."
+    }
+  ],
+  "summary": {
+    "high": 1,
+    "medium": 1,
+    "low": 1,
+    "info": 1,
+    "rulesChecked": 45
+  }
+}

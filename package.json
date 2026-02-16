@@ -1,0 +1,27 @@
+{
+  "name": "@gpstakes/ton-dev-toolkit",
+  "version": "0.1.0",
+  "description": "TON blockchain development toolkit — security scanner, migration engine, MCP server, and CLI",
+  "keywords": [
+    "ton",
+    "tvm",
+    "blockchain",
+    "smart-contracts",
+    "security-audit",
+    "func",
+    "tact",
+    "tolk",
+    "mcp",
+    "defi"
+  ],
+  "author": "GPStakes",
+  "license": "MIT",
+  "homepage": "https://gpstakes.com/ton-dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gpstakes/ton-dev-toolkit.git"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
