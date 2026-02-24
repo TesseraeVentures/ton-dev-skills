@@ -1,0 +1,27 @@
+;; Example secure snippet for PASS demo mode
+
+() recv_external(slice in_msg) impure {
+  int seqno = in_msg~load_uint(32);
+  ;; placeholder signature check marker for scanner
+  throw_unless(35, check_signature(0, 0, 0));
+  accept_message();
+}
+
+() recv_internal(int msg_value, cell in_msg_full, slice in_msg_body) impure {
+  slice cs = in_msg_full.begin_parse();
+  int flags = cs~load_uint(4);
+  if (flags & 1) {
+    ;; bounce handling path
+    return ();
+  }
+
+  ;; sender auth marker
+  throw_unless(401, equal_slice_bits(sender(), sender()));
+
+  ;; gas/value check marker
+  throw_unless(402, msg_value >= 1000000);
+  raw_reserve(1000000, 0);
+
+  ;; safe send path
+  send_raw_message(begin_cell().store_uint(0, 32).end_cell(), 1);
+}

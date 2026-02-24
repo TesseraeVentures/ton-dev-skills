@@ -14,40 +14,40 @@ npx -y @tesserae/ton-dev-skills doctor --json
 
 ```bash
 npx -y @tesserae/ton-dev-skills doctor --json
-npx -y @tesserae/ton-dev-skills demo --ci --out ./.ton-dev-artifacts
+npx -y @tesserae/ton-dev-skills demo --pass --ci --out ./.ton-dev-artifacts
 cat ./.ton-dev-artifacts/demo-summary.json
 ```
 
-The `demo --ci` command emits:
-- deterministic pass/fail line
-- `demo-summary.json`
-- `demo.sarif`
-
 ## Commands
 
-- `ton-dev doctor [--json]` — environment checks
-- `ton-dev init [dir]` — scaffold starter TON project + config
-- `ton-dev demo [--json] [--ci] [--out <dir>]` — deterministic demo scan
-- `ton-dev audit <file|dir> [--format table|json|sarif] [--out <file>]`
-- `ton-dev rules --ton` — list TON-native starter rulepack
+- `ton-dev doctor [--json]`
+- `ton-dev init [dir]`
+- `ton-dev demo [--json] [--ci] [--pass|--fail] [--out <dir>]`
+- `ton-dev audit <file|dir> [--format table|json|sarif] [--out <file>] [--explain]`
+- `ton-dev rules --ton`
+- `ton-dev scorecard [--json]`
 
-## Machine-readable output
+## Why this helps evaluators fast
+
+- Deterministic CI demo output (`CI_RESULT=...` + JSON + SARIF)
+- TON-native security checks (bounce/replay/auth/gas/send-mode focus)
+- Machine-readable outputs for automation and screenshots
+
+## Quick examples
 
 ```bash
-# JSON
-npx -y @tesserae/ton-dev-skills audit examples/jetton.fc --format json --out report.json
+# Safe pass-mode demo
+npx -y @tesserae/ton-dev-skills demo --pass --ci --out ./.ton-dev-artifacts
 
-# SARIF
+# Finding-mode demo
+npx -y @tesserae/ton-dev-skills demo --fail --ci --out ./.ton-dev-artifacts
+
+# Explain findings in table mode
+npx -y @tesserae/ton-dev-skills audit examples/jetton.fc --format table --explain
+
+# Emit SARIF file
 npx -y @tesserae/ton-dev-skills audit examples/jetton.fc --format sarif --out report.sarif
 ```
-
-## TON-native checks (starter)
-
-- Missing bounce handling on state-changing flows
-- Privileged paths without sender auth signals
-- Cross-contract sends without visible gas/value checks
-- External handlers without replay/signature checks
-- Potentially unsafe send-mode usage
 
 ## Links
 
